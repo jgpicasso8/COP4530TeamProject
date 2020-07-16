@@ -1,102 +1,132 @@
-
 # Authors: Andres Greene
 #         Raquel Garcia
 #         Laureano Griffin
 #         Josue Gonzalez-Picasso
 
-class Dynamic_queue:
+from DynamicQueue import Dynamic_queue
 
-    # Constructor
-    def __init__(self, value=10):
-        # Initializes attributes
-        self.elements = []*value
-        # self.iHead = 0
-        # self.iTail = 0
-        # self.entryCount = 0
-        # Sets capacity equal to 1 if the value is equal to zero or lower
-        if value <= 0:
-            self.currCapacity, self.initialCapacity = 1, 1
-        else:
-            self.currCapacity, self.initialCapacity = value, value
+# File is used to test the dynamic queue class
 
-    # Destructor
-    def __del__(self):
-        print("Destructor Called")
-        return
+# Tests the constructor
+print("CONSTRUCTOR")
+testSize = input("Enter the size of the queue: ")
+if testSize == '':
+    testQueue = Dynamic_queue()
+else:
+    while(testSize.isalpha() or int(testSize) < 0 ):
+        testSize = input("Invalid input. Please re-enter size of queue: ")
+    testSize = int(testSize)
+    testQueue = Dynamic_queue(testSize)
 
-    # Copy Constructor - creates a new instance of queue
-    def __copy__(self):
-        copy = Dynamic_queue(self.currCapacity)
-        if len(self.elements) == 0:
-            return copy
-        else:
-            for x in self.elements:
-                copy.elements.append(x)
-        return copy
 
-    # Accessors - access the queue, but doesn't modify it
-    # Returns the object at the head of the queue
-    def head(self):
-        if len(self.elements) == 0:
-            return "empty"
-        else:
-            return self.elements[0]
+print("The initial capacity is " + str(testQueue.initialCapacity))
+print("The current capacity is " + str(testQueue.currCapacity))
 
-    # Returns the number of objects currently stored in the queue
-    def size(self):
-        return len(self.elements)
+# Tests the copy constructor
+print("\nCOPY CONSTRUCTOR")
+copy = testQueue.__copy__()
+print("The copy's initial capacity is " + str(copy.initialCapacity))
+print("The copy's current capacity is " + str(copy.currCapacity))
+print("The Original List: " + str(testQueue.elements))
+print("The Copied List: " + str(copy.elements))
 
-    # Returns true if the queue is empty. Returns false otherwise
-    def empty(self):
-        if len(self.elements) == 0:
-            return True
-        else:
-            return False
+# Tests the Accessors
+print("\nACCESSORS")
+print("What is stored at the head is " + str(testQueue.head()))
+print("The number of elements currently stored is " + str(testQueue.size()))
+print("Is the queue empty? " + str(testQueue.empty()))
+print("The capacity of the queue is " + str(testQueue.capacity()))
 
-    # Returns the current capacity of the queue.
-    def capacity(self):
-        return self.currCapacity
+# Tests the Mutators
+print("\nMUTATORS")
+print("SWAP")
+print("The Original List: " + str(testQueue.elements))
+doSwap = input("Swap all member variables of this queue? (Y/N): ")
+while(doSwap != "Y" and doSwap != "y" and doSwap != "n" and doSwap != "N"):
+        doSwap = input("Invalid input. Please re-enter (Y/N): ")
+if doSwap == "Y" or doSwap == "y" or doSwap == "n" or doSwap == "N":
+    if(doSwap == "Y" or doSwap == "y"):
+        newVar = input("Enter new variable to replace all variables with: ")
+        """
+        Should have input validation here too
+        """
+        newVar = int(newVar)
+        print("New queue after swap: " + str(testQueue.swap(newVar)))
 
-    # Mutators - Changes values in the queue
-    # will swap all the member variables of this queue with those of the argument
-    def swap(self, swapper):
-        for x in self.elements:
-            self.elements.pop(0)
-            self.elements.append(swapper)
-        return self.elements
 
-    # Swaps member variables with the copy on the right side of the operator
-    def __eq__(self, copy):
-        # Swaps lists
-        temp = copy.elements, self.elements
-        self.elements = temp[0]
-        copy.elements = temp[1]
-        # Swaps other member variables
-        temp1, temp2 = self.currCapacity, self.initialCapacity
-        self.currCapacity, self.initialCapacity = copy.currCapacity, copy.initialCapacity
-        copy.currCapacity, copy.initialCapacity = temp1, temp2
-        return copy, temp
 
-    # Insert the argument at the end of the queue.
-    # If the array is full before the argument is placed, the array is doubled first.
-    def enqueue(self, value):
-        if self.currCapacity == self.size():
-            self.currCapacity *= 2
-        self.elements.append(value)
-        return
 
-    # Removes the object at the front of the queue. If, after the object is removed, the array is
-    # 1/4 full, and its greater than the initial capacity, the capacity is halved.
-    def dequeue(self):
-        self.elements.pop(0)
-        if self.size == 0:
-            return
-        elif (self.capacity() > self.initialCapacity) & (self.size()/self.capacity() <= 0.25):
-            self.currCapacity /= 2
-            self.currCapacity = int(self.currCapacity)
-        return
+print("\nEQUAL OPERATOR")
+copy.enqueue(6)
+print("The Original List: " + str(testQueue.elements))
+print("The initial capacity is " + str(testQueue.initialCapacity))
+print("The current capacity is " + str(testQueue.currCapacity))
+print("The Copied List: " + str(copy.elements))
+print("The copy's initial capacity is " + str(copy.initialCapacity))
+print("The copy's current capacity is " + str(copy.currCapacity))
+testQueue == copy
+print("Swapped\nThe Original List: " + str(testQueue.elements))
+print("The initial capacity is " + str(testQueue.initialCapacity))
+print("The current capacity is " + str(testQueue.currCapacity))
+print("The Copied List: " + str(copy.elements))
+print("The copy's initial capacity is " + str(copy.initialCapacity))
+print("The copy's current capacity is " + str(copy.currCapacity))
 
-    # Resets member variables to empty queue. The array is resized to the initial capacity
-    def clear(self):
-        self.elements.clear()
-        return self.elements
+print("\nENQUEUE")
+i = 0
+while i < 5:
+    print("testQueue's elements:" + str(testQueue.elements))
+    print("The initial capacity is " + str(testQueue.initialCapacity))
+    print("The current capacity is " + str(testQueue.currCapacity))
+    testQueue.enqueue(5)
+    print("After enqueue, testQueue's elements:" + str(testQueue.elements))
+    print("The current capacity is " + str(testQueue.currCapacity) + "\n")
+    i += 1
+
+print("\nDEQUEUE ")
+i = 0
+while i < 4:
+    print("testQueue's elements:" + str(testQueue.elements))
+    print("The initial capacity is " + str(testQueue.initialCapacity))
+    print("The current capacity is " + str(testQueue.currCapacity))
+    testQueue.dequeue()
+    print("After dequeue, testQueue's elements:" + str(testQueue.elements))
+    print("The current capacity is " + str(testQueue.currCapacity) + "\n")
+    i +=1
+
+testQueue.dequeue()
+print("After dequeue, testQueue's elements:" + str(testQueue.elements))
+print("The current capacity is " + str(testQueue.currCapacity))
+
+# ADDING/DELETING TO OR FROM QUEUE
+print("\nADDING/DELETING VAR TO QUEUE")
+userAdd = input("Add or delete variable to Queue? (Y/N): ")
+while(userAdd != "Y" and userAdd != "y" and userAdd != "n" and userAdd != "N"):
+        userAdd = input("Invalid input. Please re-enter (Y/N): ")
+if userAdd == "Y" or userAdd == "y":
+    userChoice = input("Enter 'A' for adding or 'D' for deleting a variable (A/D): " )
+    while (userChoice != "A" and userChoice != "a" and userChoice != "D" and userChoice != "d"):
+        userChoice = input("Invalid input. Please re-enter 'A' for adding or 'D' for deleting a variable: ")
+    if userChoice == "A" or userChoice == "a":
+        # Adding preset value to the queue 3
+        testQueue.enqueue(3)
+        print("Variable 3 added to queue.")
+        print("Updated queue: ", testQueue.elements)
+    elif userChoice == "D" or userChoice == "d":
+        # Dequeuing from front
+        testQueue.dequeue()
+        print("Front element deleted from queue.")
+        print("Updated queue: ", testQueue.elements)
+
+
+print("\nCLEAR")
+print("Clearing testQueue's elements: " + str(testQueue.clear()))
+print("The initial capacity is " + str(testQueue.initialCapacity))
+print("The current capacity is " + str(testQueue.currCapacity))
+
+# Starts to create actual main
+# Needs to demonstrate things cna be removed from queue, added to queue, and the size & capacity will dynamically change
+
+# Tests the destructor
+# Destructor is called at the end of the program
+print("\nDestructor")
