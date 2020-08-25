@@ -121,9 +121,7 @@ print("Clearing testQueue's elements: " + str(testQueue.clear()))
 print("The initial capacity is " + str(testQueue.initialCapacity))
 print("The current capacity is " + str(testQueue.currCapacity))
 
-# Starts to create actual main
-# Needs to demonstrate things cna be removed from queue, added to queue, and the size & capacity will dynamically change
-
 # Tests the destructor
 # Destructor is called at the end of the program
 print("\nDestructor")
+
